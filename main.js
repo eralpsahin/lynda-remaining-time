@@ -51,12 +51,29 @@
             return;
 
         let percentage = calculatePercentage(remaining, total);
-        console.log("Total Remaining:", secondsToHms(remaining), `${percentage}%`);
 
-        //TODO: Issue: New span gets injected on every url change #1 
-        let span = document.createElement("span");
-        span.appendChild(document.createTextNode(`Total Remaining: ${secondsToHms(remaining)} ${percentage}%`));
-        title[0].appendChild(span);
+        let msg = `Total Remaining: ${secondsToHms(remaining)} ${percentage}%`;
+        console.log(msg);
+
+        injectMsg(title, msg);
+    }
+
+    /*
+    * Injects a span with message or updates already injected one
+    *
+    * @param {Object} title - Document object for injection
+    * @param {string} msg - Information to display in the injected span
+    */
+    function injectMsg(title, msg) {
+        let span = document.getElementsByClassName("remaining-time");
+        if (span.length == 0) {
+            span = document.createElement("span");
+            span.className = "remaining-time";
+            span.appendChild(document.createTextNode(msg));
+            title[0].appendChild(span);
+        } else {
+            span[0].innerText = msg;
+        }
     }
 
     /*
