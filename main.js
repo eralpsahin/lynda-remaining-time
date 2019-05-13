@@ -7,6 +7,7 @@
 
     /*
     * Reads the page and extracts total course time
+    *
     * @return {number} Total course time in seconds
     */
     function calculateTotal() {
@@ -21,6 +22,7 @@
 
     /*
     * Reads the page and calculates total remaınıng tıme
+    *
     * @return {number} Remaining course time in seconds
     */
     function calculateRemaining() {
@@ -39,6 +41,7 @@
 
     /*
     * Updates the injected remaining info on page
+    *
     * * @param {number} total - Total course time in seconds
     */
     function updateRemaining(total) {
@@ -58,6 +61,7 @@
 
     /*
     * Calculates the percentage from total and remaining
+    *
     * @param {number} remaining - Remaining course time in seconds
     * @param {number} total - Total course time in seconds
     * @return {number} The percentage as at most two decimal float
@@ -73,6 +77,7 @@
 
     /*
     * Convert seconds to #h #m #s
+    *
     * @param {number} input - Time in seconds
     * @return {string} Time in #h #m #s format
     */
@@ -90,6 +95,7 @@
 
     /*
     * Convert #h #m #s to seconds
+    *
     * @param {string} input - Time in #h #m #s format
     * @return {string} Time in seconds
     */
@@ -113,6 +119,7 @@
 
     /*
     * Slice the time from the input
+    *
     * @param {string} input - Time param in #h #m #s format
     * @param {string} ch - 'h' or 'm' or 's' 
     * @return {number} Hour or Minute in seconds
