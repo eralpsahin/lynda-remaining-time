@@ -1,0 +1,25 @@
+{
+    "name": "Lynda Remaining Time",
+    "version": "0.1",
+    "manifest_version": 2,
+    "description": "This extension reads the course page on Lynda and calculates your remaining time.",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+      },
+      "content_scripts": [
+        {
+          "matches": [
+            "https://www.lynda.com/*"
+          ],
+          "js": ["main.js"]
+        }
+      ],
+      "permissions": [
+        "tabs"
+      ],
+      "background": {
+        "scripts":["background.js"]
+      }
+}
