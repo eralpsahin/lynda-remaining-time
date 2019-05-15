@@ -13,13 +13,14 @@
           "matches": [
             "https://www.lynda.com/*"
           ],
-          "js": ["main.js"]
+          "js": ["remaining.js"],
+          "css" : ["remaining.css"]
         }
       ],
       "permissions": [
         "tabs"
       ],
       "background": {
-        "scripts":["background.js"]
+        "scripts":["remaining-background.js"]
       }
 }
