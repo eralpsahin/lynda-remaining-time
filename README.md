@@ -1,4 +1,10 @@
-# Lynda Remaining Time Viewer
-This is a Chrome Extension that calculates the remaining time in the Lynda course. It reads the source code of a Lynda course page and currently injects the remaining time to the title banner on the course page.
+# Lynda Remaining Time
 
-![alt text](https://i.ibb.co/VVwLbpz/Screen-Shot-2019-05-13-at-00-00-38.png)
+Lynda Remaining Time is a chrome extension that lets you see total course duration and remaining time on lynda.com courses.
+
+It reads the source of the page and injects two nodes above the sidebar.
+
+![alt text](https://user-images.githubusercontent.com/10602289/57739641-6a22c380-7682-11e9-890a-ae4f8255f06a.png)
+
+# LICENSE
+MIT
