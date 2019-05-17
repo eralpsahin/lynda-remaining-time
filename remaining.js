@@ -15,11 +15,33 @@
         if (Array.from(total).length != 0) {
             total = total[0].innerText;
             console.log("Course total time:", total);
+
+            // Inject the template to sidebar
+            injectTemplate(total);
+
             return hmsToSeconds(total);
         }
         return 0;
     };
 
+    /* 
+    * Injects the template div to sidebar
+    *
+    * @param {string} total - Total course time in #h #m #s format
+    */
+    function injectTemplate(total) {
+
+        // Create the wrapping row
+        let row = document.createElement("div");
+        row.className = "row";
+        row.style = "margin-top: 20px;";
+        row.innerHTML = `<div class="col-xs-5 col-md-4 col-xl-4 inject"> <span id="total">${total}</span> <h6>Total</h6>
+                        </div> <div class="col-xs-7 col-md-8 col-xl-8 inject"> <span id="remaining"></span> <h6>Remaining</h6</div>`;
+
+        let sect = document.getElementsByClassName("sidebar-col")[0].children[0];
+        let side = sect.children[0];
+        sect.insertBefore(row,side);
+    }
     /*
     * Reads the page and calculates total remaınıng tıme
     *
@@ -44,36 +66,17 @@
     *
     * * @param {number} total - Total course time in seconds
     */
-    function updateRemaining(total) {
-        let remaining = calculateRemaining();
-        let title = document.getElementsByClassName("col-xs-7 col-sm-9 col-md-6 col-lg-7");
-        if (title.length == 0) // Not a course page.
+    function updateRemaining(total) {       
+        if (!document.getElementById("remaining")) // Not a course page.
             return;
 
+        let remaining = calculateRemaining();
         let percentage = calculatePercentage(remaining, total);
+        let msg = `${secondsToHms(remaining)} ${percentage}%`;
+        console.log(`Remaining: ${msg}`);
 
-        let msg = `Total Remaining: ${secondsToHms(remaining)} ${percentage}%`;
-        console.log(msg);
-
-        injectMsg(title, msg);
-    }
-
-    /*
-    * Injects a span with message or updates already injected one
-    *
-    * @param {Object} title - Document object for injection
-    * @param {string} msg - Information to display in the injected span
-    */
-    function injectMsg(title, msg) {
-        let span = document.getElementsByClassName("remaining-time");
-        if (span.length == 0) {
-            span = document.createElement("span");
-            span.className = "remaining-time";
-            span.appendChild(document.createTextNode(msg));
-            title[0].appendChild(span);
-        } else {
-            span[0].innerText = msg;
-        }
+        // Inject to the span
+        document.getElementById("remaining").innerText = msg;
     }
 
     /*
@@ -100,13 +103,13 @@
     */
     function secondsToHms(input) {
         input = Number(input);
-        var h = Math.floor(input / 3600);
-        var m = Math.floor(input % 3600 / 60);
-        var s = Math.floor(input % 3600 % 60);
+        let h = Math.floor(input / 3600);
+        let m = Math.floor(input % 3600 / 60);
+        let s = Math.floor(input % 3600 % 60);
 
-        var hDisplay = h > 0 ? h + "h " : "";
-        var mDisplay = m > 0 ? m + "m " : "";
-        var sDisplay = s + "s";
+        let hDisplay = h > 0 ? h + "h " : "";
+        let mDisplay = m > 0 ? m + "m " : "";
+        let sDisplay = s + "s";
         return hDisplay + mDisplay + sDisplay;
     }
 
