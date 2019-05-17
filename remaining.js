@@ -3,26 +3,12 @@
 (function () {
 
     let total = calculateTotal();
-    updateRemaining(total);
-
-    /*
-    * Reads the page and extracts total course time
-    *
-    * @return {number} Total course time in seconds
-    */
-    function calculateTotal() {
-        let total = document.querySelectorAll("span[itemprop='timeRequired']");
-        if (Array.from(total).length != 0) {
-            total = total[0].innerText;
-            console.log("Course total time:", total);
-
-            // Inject the template to sidebar
-            injectTemplate(total);
-
-            return hmsToSeconds(total);
-        }
-        return 0;
-    };
+    let logged = document.getElementById("submenu-login") ? false : true
+    if (logged)
+        updateRemaining(total);
+    else {
+        hideRemaining();
+    }
 
     /* 
     * Injects the template div to sidebar
@@ -35,13 +21,60 @@
         let row = document.createElement("div");
         row.className = "row";
         row.style = "margin-top: 20px;";
-        row.innerHTML = `<div class="col-xs-5 col-md-4 col-xl-4 inject"> <span id="total">${total}</span> <h6>Total</h6>
-                        </div> <div class="col-xs-7 col-md-8 col-xl-8 inject"> <span id="remaining"></span> <h6>Remaining</h6</div>`;
+        row.innerHTML = `<div class="col-xs-5 col-md-4 col-xl-4 inject" id="total-node"><span id="total">${total}</span><h6>Total</h6>
+                        </div><div class="col-xs-7 col-md-8 col-xl-8 inject" id="remaining-node"><span id="remaining"></span><h6>Remaining</h6</div>`;
 
         let sect = document.getElementsByClassName("sidebar-col")[0].children[0];
         let side = sect.children[0];
-        sect.insertBefore(row,side);
+        sect.insertBefore(row, side);
     }
+
+    /*
+    * Updates the injected remaining info on page
+    *
+    * @param {number} total - Total course time in seconds
+    */
+    function updateRemaining(total) {
+        if (!document.getElementById("remaining")) // Not a course page.
+            return;
+        let remaining = calculateRemaining();
+        let percentage = calculatePercentage(remaining, total);
+        let msg = `${secondsToHms(remaining)} ${percentage}%`;
+        console.log(`Remaining: ${msg}`);
+
+        // Inject to the span
+        document.getElementById("remaining").innerText = msg;
+    }
+
+    /*
+    * Hides remaining node when not logged in
+    */
+    function hideRemaining() {
+        let remaining = document.getElementById("remaining-node");
+        remaining.style.display = "none";
+        let total = document.getElementById("total-node");
+        total.className = "col-xs-12 col-md-12 col-xl-12 inject";
+    }
+
+    /*
+   * Reads the page and extracts total course time
+   *
+   * @return {number} Total course time in seconds
+   */
+    function calculateTotal() {
+        let total = document.querySelectorAll("span[itemprop='timeRequired']");
+        if (Array.from(total).length != 0) {
+            total = total[0].innerText;
+            console.log("Course total time:", total);
+
+            // Inject the template to sidebar
+            injectTemplate(total);
+
+            return hmsToSeconds(total);
+        }
+        return 0;
+    }
+
     /*
     * Reads the page and calculates total remaınıng tıme
     *
@@ -59,24 +92,6 @@
             });
         }
         return remaining;
-    }
-
-    /*
-    * Updates the injected remaining info on page
-    *
-    * * @param {number} total - Total course time in seconds
-    */
-    function updateRemaining(total) {       
-        if (!document.getElementById("remaining")) // Not a course page.
-            return;
-
-        let remaining = calculateRemaining();
-        let percentage = calculatePercentage(remaining, total);
-        let msg = `${secondsToHms(remaining)} ${percentage}%`;
-        console.log(`Remaining: ${msg}`);
-
-        // Inject to the span
-        document.getElementById("remaining").innerText = msg;
     }
 
     /*
@@ -161,7 +176,7 @@
 
     chrome.runtime.onMessage.addListener(function
         (request, sender, sendResponse) {
-        if (request.message === 'URL changed.') { // recalculate remaining time
+        if (request.message === 'URL changed.' && logged) { // recalculate remaining time
             updateRemaining(total);
         }
     });
