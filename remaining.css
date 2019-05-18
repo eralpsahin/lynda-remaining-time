@@ -9,3 +9,6 @@
 div.inject {
     text-align: center;display: inline-block;vertical-align: top;
 }
+#sidebar {
+    max-height: 1450px;
+}
