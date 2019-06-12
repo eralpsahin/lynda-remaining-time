@@ -6,5 +6,11 @@ It reads the source of the page and injects two nodes above the sidebar.
 
 ![alt text](https://user-images.githubusercontent.com/10602289/57739641-6a22c380-7682-11e9-890a-ae4f8255f06a.png)
 
+
+
+# Installation 
+
+Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/lynda-remaining-time/cpbkogelkkolljigdjnkengngbnknadn).
+
 # LICENSE
 [MIT](https://github.com/eralpsahin/lynda-remaining-time/blob/master/LICENSE)
