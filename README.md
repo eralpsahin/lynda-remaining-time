@@ -4,7 +4,7 @@ Lynda Remaining Time is a chrome extension that lets you see total course durati
 
 It reads the source of the page and injects two nodes above the sidebar.
 
-![alt text](https://user-images.githubusercontent.com/10602289/57739641-6a22c380-7682-11e9-890a-ae4f8255f06a.png)
+![Extension](https://user-images.githubusercontent.com/10602289/59970989-7cc1cf80-9541-11e9-8e5f-8cbdce6532c3.jpeg)
 
 
 
