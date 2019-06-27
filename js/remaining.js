@@ -22,7 +22,7 @@
         row.className = "row";
         row.style = "margin-top: 20px;";
         row.innerHTML = `<div class="col-xs-5 col-md-4 col-xl-4 inject" id="total-node"><span id="total">${total}</span><h6>Total</h6>
-                        </div><div class="col-xs-7 col-md-8 col-xl-8 inject" id="remaining-node"><span id="remaining"></span><h6>Remaining</h6</div>`;
+                        </div><div class="col-xs-7 col-md-8 col-xl-8 inject" id="remaining-node"><span id="remaining"></span><h6>Remaining</h6></div>`;
 
         let sect = document.getElementsByClassName("sidebar-col")[0].children[0];
         let side = sect.children[0];
