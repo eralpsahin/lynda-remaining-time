@@ -1,14 +1,56 @@
 "use strict";
 
-(function () {
+(function() {
 
     let total = calculateTotal();
     let logged = document.getElementById("submenu-login") ? false : true
+
+    injectOptionsButton();
+
+    chrome.storage.sync.get({
+        total: true,
+        remaining: true
+    }, function(items) {
+        // TODO render according to settings
+    });
+
     if (logged)
         updateRemaining(total);
     else {
         hideRemaining();
     }
+
+
+
+
+    function injectOptionsButton() {
+        let button = document.createElement('li');
+        button.title = "Lynda Remaining Time";
+        button.className = 'class="submenu-toggle-cont popover-trigger"';
+        button.innerHTML = `<button id="lynda-remaining-options" class="btn btn-navigation top-menu-item submenu-toggle">
+            <span class="account-name" id="option-label">LRT Options</span>
+            <i class="lyndacon player-settings hidden-xs hidden-sm"></i></button>`;
+
+        let links = document.getElementById('submenu-profile');
+        links.insertBefore(button, links.firstChild);
+
+        // Listen to options button and redirect user
+        document.getElementById('lynda-remaining-options').addEventListener('click',
+            function() {
+                chrome.runtime.sendMessage({
+                    message: 'Options clicked.'
+                });
+            }
+        );
+
+    }
+
+    // Listen URL change message for updating the widget
+    chrome.runtime.onMessage.addListener(function(request) {
+        if (request.message === 'URL changed.' && logged) { // recalculate remaining time
+            updateRemaining(total);
+        }
+    });
 
     /* 
     * Injects the template div to sidebar
@@ -86,7 +128,7 @@
         videos = Array.from(videos);
 
         if (videos.length > 0) {
-            videos.forEach(function (video) {
+            videos.forEach(function(video) {
                 if (!video.children[1].children[0].matches(".eye"))
                     remaining += hmsToSeconds(video.children[0].children[2].innerText);
             });
@@ -173,11 +215,4 @@
         else
             return 0;
     }
-
-    chrome.runtime.onMessage.addListener(function
-        (request, sender, sendResponse) {
-        if (request.message === 'URL changed.' && logged) { // recalculate remaining time
-            updateRemaining(total);
-        }
-    });
 })();

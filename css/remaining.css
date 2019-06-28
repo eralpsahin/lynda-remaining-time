@@ -29,3 +29,7 @@ div.inject {
 #sidebar {
     max-height: 1450px
 }
+
+#option-label {
+    margin-right: 8px
+}
