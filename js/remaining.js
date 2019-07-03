@@ -7,22 +7,36 @@
 
     injectOptionsButton();
 
-    chrome.storage.sync.get({
-        total: true,
-        remaining: true
-    }, function(items) {
-        // TODO render according to settings
-    });
+    refreshWidget();
 
-    if (logged)
-        updateRemaining(total);
-    else {
-        hideRemaining();
+    /* 
+    * Get extension options and refresh the widgets.
+    *
+    */
+    function refreshWidget() {
+        chrome.storage.sync.get({
+            total: true,
+            remaining: true
+        }, function(items) {
+            if (!items.total) { // Hide Total widget
+                let totalEl = document.getElementById("total-node");
+                let remainingEl = document.getElementById("remaining-node");
+                totalEl.className="hidden";
+                remainingEl.className="col-xs-12 inject";
+            }
+            if (logged) {
+                updateRemaining(total, items);
+            }
+            else {
+                hideRemaining();
+            }
+        });
     }
 
-
-
-
+    /* 
+    * Injects the options button to titlebar.
+    *
+    */
     function injectOptionsButton() {
         let button = document.createElement('li');
         button.title = "Lynda Remaining Time";
@@ -31,7 +45,11 @@
             <span class="account-name" id="option-label">LRT Options</span>
             <i class="lyndacon player-settings hidden-xs hidden-sm"></i></button>`;
 
-        let links = document.getElementById('submenu-profile');
+        // Inject options for both logged in and out users.
+        let links = document.getElementById('submenu-profile') || document.getElementById('submenu-login')
+
+        if (!links) return; // Login page does not have link to inject
+
         links.insertBefore(button, links.firstChild);
 
         // Listen to options button and redirect user
@@ -48,7 +66,7 @@
     // Listen URL change message for updating the widget
     chrome.runtime.onMessage.addListener(function(request) {
         if (request.message === 'URL changed.' && logged) { // recalculate remaining time
-            updateRemaining(total);
+            refreshWidget();
         }
     });
 
@@ -63,8 +81,8 @@
         let row = document.createElement("div");
         row.className = "row";
         row.style = "margin-top: 20px;";
-        row.innerHTML = `<div class="col-xs-5 col-md-4 col-xl-4 inject" id="total-node"><span id="total">${total}</span><h6>Total</h6>
-                        </div><div class="col-xs-7 col-md-8 col-xl-8 inject" id="remaining-node"><span id="remaining"></span><h6>Remaining</h6></div>`;
+        row.innerHTML = `<div id="total-node" class="col-xs-5 col-md-4 col-xl-4 inject" id="total-node"><span id="total">${total}</span><h6>Total</h6>
+                        </div><div class="col-xs-7 col-md-8 col-xl-8 inject" id="remaining-node"><span id="remaining"></span><h6 id="remaining-title">Remaining</h6></div>`;
 
         let sect = document.getElementsByClassName("sidebar-col")[0].children[0];
         let side = sect.children[0];
@@ -76,15 +94,19 @@
     *
     * @param {number} total - Total course time in seconds
     */
-    function updateRemaining(total) {
+    function updateRemaining(total, options) {
         if (!document.getElementById("remaining")) // Not a course page.
             return;
-        let remaining = calculateRemaining();
+        let remaining = calculateRemaining(options.remaining);
         let percentage = calculatePercentage(remaining, total);
         let msg = `${secondsToHms(remaining)} ${percentage}%`;
-        console.log(`Remaining: ${msg}`);
+        let title = options.remaining ? 'Remaining' : 'Completed';
 
-        // Inject to the span
+        // Inject title for the second widget
+        let titleEl = document.getElementById("remaining-title");
+        titleEl.innerText = title;
+
+        // Inject the time information
         document.getElementById("remaining").innerText = msg;
     }
 
@@ -93,6 +115,7 @@
     */
     function hideRemaining() {
         let remaining = document.getElementById("remaining-node");
+        if (!remaining) return;
         remaining.style.display = "none";
         let total = document.getElementById("total-node");
         total.className = "col-xs-12 col-md-12 col-xl-12 inject";
@@ -107,7 +130,6 @@
         let total = document.querySelectorAll("span[itemprop='timeRequired']");
         if (Array.from(total).length != 0) {
             total = total[0].innerText;
-            console.log("Course total time:", total);
 
             // Inject the template to sidebar
             injectTemplate(total);
@@ -122,18 +144,20 @@
     *
     * @return {number} Remaining course time in seconds
     */
-    function calculateRemaining() {
-        let remaining = 0;
+    function calculateRemaining(isRemaining) {
+        let sum = 0;
         let videos = document.getElementsByClassName("row video-row");
         videos = Array.from(videos);
 
         if (videos.length > 0) {
             videos.forEach(function(video) {
-                if (!video.children[1].children[0].matches(".eye"))
-                    remaining += hmsToSeconds(video.children[0].children[2].innerText);
+                if (isRemaining && !video.children[1].children[0].matches(".eye"))
+                    sum += hmsToSeconds(video.children[0].children[2].innerText);
+                if (!isRemaining && video.children[1].children[0].matches(".eye"))
+                    sum += hmsToSeconds(video.children[0].children[2].innerText);
             });
         }
-        return remaining;
+        return sum;
     }
 
     /*
