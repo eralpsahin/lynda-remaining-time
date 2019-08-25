@@ -1,35 +1,35 @@
 #total {
-    background-color: #222;
-    color: #fff;
-    display: block;
-    line-height: 30px;
-    font-size: 20px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px
+  background-color: #222;
+  color: #fff;
+  display: block;
+  line-height: 30px;
+  font-size: 20px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 #remaining {
-    background-color: #fcae2a;
-    color: #000;
-    display: block;
-    line-height: 30px;
-    font-size: 20px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px
+  background-color: #fcae2a;
+  color: #000;
+  display: block;
+  line-height: 30px;
+  font-size: 20px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 div.inject {
-    text-align: center;
-    display: inline-block;
-    vertical-align: top
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
 }
 
 #sidebar {
-    max-height: 1450px
+  max-height: 1450px;
 }
 
 #option-label {
-    margin-right: 8px
+  margin-right: 8px;
 }

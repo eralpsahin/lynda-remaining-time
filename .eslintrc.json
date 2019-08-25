@@ -1,0 +1,16 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true,
+    "webextensions": true,
+    "es6": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "off",
+    "no-prototype-builtins": "off"
+  },
+  "globals": {
+      "M": "readonly"
+  }
+}

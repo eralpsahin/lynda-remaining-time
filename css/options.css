@@ -1,65 +1,79 @@
 #total {
-    background-color: #222; color: #fff; display: block;
-    line-height: 30px; font-size: 20px; text-align: center; padding: 5px; border-radius: 5px; 
+  background-color: #222;
+  color: #fff;
+  display: block;
+  line-height: 30px;
+  font-size: 20px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
 }
 #remaining {
-    background-color: #fcae2a; color: #000; display: block; 
-    line-height: 30px; font-size: 20px; text-align: center; padding: 5px; border-radius: 5px;
+  background-color: #fcae2a;
+  color: #000;
+  display: block;
+  line-height: 30px;
+  font-size: 20px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 div.inject {
-    text-align: center;display: inline-block;vertical-align: top;
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
 }
 
 #completed {
-    background-color: #fcae2a;
-    color: #000;
-    display: block;
-    line-height: 30px;
-    font-size: 20px;
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px;
+  background-color: #fcae2a;
+  color: #000;
+  display: block;
+  line-height: 30px;
+  font-size: 20px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 #options {
-    margin-left: 25px;
-    margin-right: 25px;
-    width: 650px
+  margin-left: 25px;
+  margin-right: 25px;
+  width: 650px;
 }
 
 .options {
-    height: 400px;
-    width: 700px
+  height: 400px;
+  width: 700px;
 }
 
 #total-time {
-    margin-bottom: 35px
+  margin-bottom: 35px;
 }
 
 .single {
-    width: 90% !important
+  width: 90% !important;
 }
 
 #total-preview {
-    width: 30%;
-    margin-right: 15px
+  width: 30%;
+  margin-right: 15px;
 }
 
 #remaining-preview {
-    width: 60%;
-    margin-left: 25px
+  width: 60%;
+  margin-left: 25px;
 }
 
 #completed-preview {
-    width: 60%;
-    margin-left: 25px;
+  width: 60%;
+  margin-left: 25px;
 }
 
 #completed-radio {
-    margin-left: 30px
+  margin-left: 30px;
 }
 
 #preview {
-    margin-top: 50px
+  margin-top: 50px;
 }

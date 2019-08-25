@@ -11,25 +11,14 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://www.lynda.com/*"
-      ],
-      "js": [
-        "js/remaining.js"
-      ],
-      "css": [
-        "css/remaining.css"
-      ]
+      "matches": ["https://www.lynda.com/*"],
+      "js": ["js/remaining.js"],
+      "css": ["css/remaining.css"]
     }
   ],
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
+  "permissions": ["storage", "tabs"],
   "background": {
-    "scripts": [
-      "js/remaining-background.js"
-    ]
+    "scripts": ["js/remaining-background.js"]
   },
   "options_ui": {
     "page": "html/options.html",
